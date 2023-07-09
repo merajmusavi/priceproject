@@ -1,8 +1,12 @@
-package com.example.fragmentkt
+package com.example.fragmentkt.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.example.fragmentkt.Adapter.ViewPagerAdapter
+import com.example.fragmentkt.R
 import com.example.fragmentkt.databinding.ActivityMainBinding
 import com.example.fragmentkt.fragments.DolorFragment
 import com.example.fragmentkt.fragments.GoldFragment
@@ -19,15 +23,9 @@ class MainActivity : AppCompatActivity() {
         binding.tablayout.getTabAt(1)?.select()
         binding.tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val manager = supportFragmentManager
-                val transaction = manager.beginTransaction()
-                if (tab?.position == 0) {
-                    transaction.replace(R.id.frameFrag, GoldFragment()).commit()
-                } else {
-                    transaction.replace(R.id.frameFrag, DolorFragment()).commit()
+                if (tab != null) {
+                    binding.viewPager.currentItem = tab.position
                 }
-
-
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -36,6 +34,17 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
 
+        })
+
+        binding.viewPager.adapter = ViewPagerAdapter(this)
+        binding.viewPager.currentItem = 1
+
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tablayout.getTabAt(position)?.select()
+
+            }
         })
     }
 }
