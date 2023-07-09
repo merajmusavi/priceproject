@@ -1,2 +1,2 @@
 package com.example.fragmentkt.DataClass
-data class DataModel(var title:String,var body:String)
+data class DataModel(var userId:Int,var id:Int,var title:String,var body:String)
