@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface ApiContract {
 @GET("posts")
-fun getData():Call<MutableList<DataModel>>
+fun getData():Call<String>
 
 
 }
